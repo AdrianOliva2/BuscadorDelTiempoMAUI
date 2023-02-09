@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:converters="clr-namespace:BuscadorDelTiempoMAUI.MVVM.Converters"
+             x:Class="BuscadorDelTiempoMAUI.MVVM.Views.WeatherPage"
+             Title="WeatherPage">
+    <ContentPage.Resources>
+        <converters:CodeToLottieConverter x:Key="lottieConverter"/>
+        <converters:CodeToWeatherConverter x:Key="weatherConverter"/>
+    </ContentPage.Resources>
+    <Grid RowDefinitions=".1*, .1*, .1*, .5*, .1*, .1*" ColumnDefinitions=".33*, .33*, .33*">
+        <!--#region Row 0-->
+            <SearchBar x:Name="searchBar" Margin="10" Placeholder="Localidad" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" SearchCommand="{Binding SearchBarCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+        <!--#endregion-->
+        <!--#region Row 1-->
+            <Label Text="{Binding LocationZone}" FontSize="Medium" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center"/>
+        <!--#endregion-->
+        <!--#region Row 2-->
+            <Label Text="{Binding Weather.time}" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center"/>
+        <!--#endregion-->
+        <!--#region Row 3-->
+            <skia:SKLottieView Grid.Row="3" Grid.Column="1" RepeatCount="-1" Source="{Binding Weather.weathercode, Converter={StaticResource lottieConverter}}"/>
+        <!--#endregion-->
+        <!--#region Row 4-->
+            <Label Text="Temp" Grid.Row="4" Grid.Column="0" HorizontalOptions="Center"/>
+            <Label Text="Wind" Grid.Row="4" Grid.Column="1" HorizontalOptions="Center"/>
+            <Label Text="Weather" Grid.Row="4" Grid.Column="2" HorizontalOptions="Center"/>
+        <!--#endregion-->
+        <!--#region Row 5-->
+            <Label Text="{Binding Weather.temperature, StringFormat='{0:0}ºC'}" Grid.Row="5" Grid.Column="0" HorizontalOptions="Center"/>
+            <Label Text="{Binding Weather.windspeed, StringFormat='{0:0}Km/h'}" Grid.Row="5" Grid.Column="1" HorizontalOptions="Center"/>
+            <Label Text="{Binding Weather.weathercode, Converter={StaticResource weatherConverter}}" Grid.Row="5" Grid.Column="2" HorizontalOptions="Center"/>
+        <!--#endregion-->
+    </Grid>
+</ContentPage>
